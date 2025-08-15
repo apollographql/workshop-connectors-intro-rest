@@ -8,6 +8,10 @@ extend schema
     name: "listings"
     http: { baseURL: "https://airlock-listings.demo-api.apollo.dev" }
   )
+  @source(
+    name: "activities"
+    http: { baseURL: "https://activities-rest-api-0d717e1922e0.herokuapp.com" }
+  )
 
 type Query {
   "A curated array of listings to feature on the homepage"
@@ -51,16 +55,27 @@ type Listing {
   costPerNight: Float
   "Indicates whether listing is closed for bookings (on hiatus)"
   closed: Boolean
-  # # EXERCISE: LISTING ACTIVITIES
-  # "The activities available for this listing"
-  # activities: [Activity!]!
+  # EXERCISE: LISTING ACTIVITIES
+  "The activities available for this listing"
+  activities: [Activity!]!
+    @connect(
+      source: "activities"
+      http: { GET: "/location/{$this.id}/activities" }
+      selection: """
+      id
+      name
+      description
+      terrain
+      groupSize
+      """
+    )
 }
 
-# # EXERCISE: LISTING ACTIVITIES
-# type Activity {
-#   id: ID!
-#   name: String!
-#   description: String
-#   terrain: String
-#   groupSize: Int
-# }
+# EXERCISE: LISTING ACTIVITIES
+type Activity {
+  id: ID!
+  name: String!
+  description: String
+  terrain: String
+  groupSize: Int
+}

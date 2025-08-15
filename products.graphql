@@ -33,6 +33,7 @@ type Product {
   id: ID!
   name: String
   description: String
+  category: String
 }
 
 # ✏️ Set up your Query field with the endpoint that returns the data you want.
@@ -53,6 +54,7 @@ type Query {
         id
         name
         description
+        category
       }
       """
     )

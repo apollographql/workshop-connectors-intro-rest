@@ -41,11 +41,12 @@ type Query {
       costPerNight
       closed: closedForBookings
       """
+      entity: true
     )
 }
 
 "A particular intergalactic location available for booking"
-type Listing {
+type Listing @key(fields: "id") {
   id: ID!
   "The listing's title"
   title: String!

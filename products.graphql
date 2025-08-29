@@ -6,7 +6,8 @@
 
 extend schema
   @link( # Enable this schema to use Apollo Federation features
-    url: "https://specs.apollo.dev/federation/v2.10"
+    url: "https://specs.apollo.dev/federation/v2.11"
+    import: ["@key", "@external", "@requires"]
   )
   @link( # Enable this schema to use Apollo Connectors
     url: "https://specs.apollo.dev/connect/v0.2"
@@ -52,6 +53,26 @@ type Query {
       # You can do more with this selection mapping. Learn more at 🔗 https://www.apollographql.com/docs/graphos/schema-design/connectors/responses
       selection: """
       $.products {
+        id
+        name
+        description
+        category
+        url: slug
+      }
+      """
+    )
+}
+
+type Listing @key(fields: "id") {
+  id: ID! @external
+  costPerNight: Float @external
+  recommendedProducts: [Product]
+    @requires(fields: "costPerNight")
+    @connect(
+      source: "ecomm"
+      http: { GET: "/products?cost={$this.costPerNight}&_={$this.id}" }
+      selection: """
+       $.products {
         id
         name
         description

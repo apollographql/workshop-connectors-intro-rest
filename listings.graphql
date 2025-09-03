@@ -28,7 +28,6 @@ type Query {
       """
     )
 
-  # EXERCISE: LISTING DETAILS
   "A specific listing"
   listing(id: ID!): Listing
     @connect(
@@ -55,7 +54,6 @@ type Listing {
   costPerNight: Float
   "Indicates whether listing is closed for bookings (on hiatus)"
   closed: Boolean
-  # EXERCISE: LISTING ACTIVITIES
   "The activities available for this listing"
   activities: [Activity!]!
     @connect(
@@ -71,7 +69,6 @@ type Listing {
     )
 }
 
-# EXERCISE: LISTING ACTIVITIES
 type Activity {
   id: ID!
   name: String!

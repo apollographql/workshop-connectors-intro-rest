@@ -39,12 +39,32 @@ type Query {
       numOfBeds
       costPerNight
       closed: closedForBookings
+      description
+      photoThumbnail
+      latitude
+      longitude
       """
     )
 }
 
 "A particular intergalactic location available for booking"
-type Listing {
+type Listing
+  @key(fields: "id")
+  @connect(
+    source: "listings"
+    http: { GET: "/listings/{$this.id}" }
+    selection: """
+    id
+    title
+    numOfBeds
+    costPerNight
+    closed: closedForBookings
+    description
+    photoThumbnail
+    latitude
+    longitude
+    """
+  ) {
   id: ID!
   "The listing's title"
   title: String!
@@ -67,6 +87,14 @@ type Listing {
       groupSize
       """
     )
+  "The listing's description"
+  description: String
+  "The thumbnail image for the listing"
+  photoThumbnail: String
+  "Latitude coordinates for the destination"
+  latitude: Float
+  "Longitude coordinates for the destination"
+  longitude: Float
 }
 
 type Activity {

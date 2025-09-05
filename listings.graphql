@@ -52,7 +52,12 @@ type Listing
   @key(fields: "id")
   @connect(
     source: "listings"
-    http: { GET: "/listings/{$this.id}" }
+    http: {
+      GET: "/listings/batch"
+      queryParams: """
+      id: $batch.id
+      """
+    }
     selection: """
     id
     title

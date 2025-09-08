@@ -44,6 +44,13 @@ type Query {
       latitude
       longitude
       """
+      errors: {
+        message: "$('Sorry, we can\\'t find this listing!')"
+        extensions: """
+        code: $("LISTING_NOT_FOUND")
+        status: $status
+        """
+      }
     )
 }
 
